@@ -27,10 +27,3 @@ pytest -q
 
 The example screens a liquid NSE banking universe using prices adjusted for splits and dividends, selects candidates through 2021, and reports only 2022 onward. Replace Yahoo Finance data and the placeholder 12 bps one-way turnover cost with licensed, broker-specific data before any live use.
 
-## Interview narrative
-
-“I built a market-neutral NSE statistical-arbitrage framework that estimates hedge ratios strictly out of sample and evaluates z-score signals net of turnover costs. I focused on look-ahead bias, data adjustment, multiple testing, borrow constraints, and regime instability before interpreting performance.”
-
-## Next steps
-
-Add point-in-time index membership, false-discovery control, liquidity/borrow filters, portfolio optimization, a realistic execution model, and paper-trading monitoring.
