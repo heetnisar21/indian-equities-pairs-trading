@@ -1,0 +1,17 @@
+{
+  "dataset": "Kaggle: rohanrao/nifty50-stock-market-data",
+  "train_rows": 187244,
+  "fit_rows": 60000,
+  "test_rows": 46769,
+  "train_end": "2017-06-19",
+  "features": [
+    "ret_1",
+    "ret_5",
+    "ret_20",
+    "vol_20",
+    "range",
+    "volume_z",
+    "sma_gap"
+  ],
+  "cost_assumption_bps_per_signal_change": 5
+}

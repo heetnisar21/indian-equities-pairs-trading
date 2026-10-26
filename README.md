@@ -1,29 +1,36 @@
-# Indian Equities Pairs Trading
+# Indian Equities ML Benchmark
 
-A walk-forward, cost-aware statistical-arbitrage research framework for NSE equities. Built to demonstrate robust quant-research practice rather than optimize a headline backtest.
+A reproducible, leakage-aware baseline that predicts **next-day returns** across the NIFTY-50 universe. It is an educational research project inspired by the model families commonly used as fast, robust baselines in systematic trading research—not a production trading system or investment advice.
 
-> Educational research only — not investment advice.
+## Dataset
 
-## Research design
+The project downloads the public Kaggle dataset [NIFTY-50 Stock Market Data (2000–2021)](https://www.kaggle.com/datasets/rohanrao/nifty50-stock-market-data). Raw data is deliberately excluded from Git because it is third-party data; the download script makes the experiment repeatable.
 
-- Sector-constrained Engle–Granger cointegration screen
-- OLS hedge ratios and log-price spread construction
-- Rolling, past-only formation windows with scheduled recalibration
-- Z-score entries, exits, and stop rules
-- One-day signal delay to prevent same-close look-ahead
-- Gross-normalized legs, turnover costs, and net performance statistics
-- Synthetic regression test for timing and finite-P&L checks
+## Models
 
-## Quick start
+| Family | Implementations |
+| --- | --- |
+| Linear | OLS, Ridge |
+| Tree ensembles | Random Forest, Extra Trees |
+| Gradient boosting | LightGBM |
+
+All models use the same lagged, point-in-time features: 1/5/20-day returns, 20-day volatility, drawdown from the rolling high, volume z-score, and moving-average gap. The split is chronological (first 80% train, final 20% test); no random shuffling is used.
+
+## Run
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-pip install -e .
-python run_research.py
-pytest -q
+python -m venv .venv
+.venv/bin/pip install -r requirements.txt
+bash scripts/download_kaggle.sh
+.venv/bin/python src/train.py
 ```
 
-The example screens a liquid NSE banking universe using prices adjusted for splits and dividends, selects candidates through 2021, and reports only 2022 onward. Replace Yahoo Finance data and the placeholder 12 bps one-way turnover cost with licensed, broker-specific data before any live use.
+Results are written to `reports/model_results.csv`, with dataset/split assumptions in `reports/run_metadata.json`.
 
+## Evaluation
+
+Besides RMSE and MAE, the report gives directional accuracy and a deliberately simple **hypothetical** net Sharpe proxy. It takes the sign of the return forecast and subtracts 5 bps whenever that sign changes. It omits slippage, market impact, liquidity constraints, borrow, delays, survivorship bias, and portfolio construction. Do not interpret it as an investable backtest or evidence of future returns.
+
+## Research extensions
+
+Use walk-forward validation, point-in-time constituents, realistic execution simulation, feature neutralization, cross-sectional ranking, and an out-of-sample post-2021 dataset before making any investment inference.

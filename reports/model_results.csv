@@ -1,0 +1,6 @@
+model,rmse_bps,mae_bps,directional_accuracy,net_sharpe,mean_net_daily_bps
+OLS,219.757,150.048,0.4958,-0.088,-1.217
+Ridge,219.756,150.048,0.4958,-0.088,-1.209
+LightGBM,220.46,150.212,0.4941,-0.141,-1.945
+Extra Trees,220.329,150.355,0.4962,-0.248,-3.421
+Random Forest,221.789,151.261,0.4958,-0.341,-4.701
